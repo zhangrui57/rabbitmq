@@ -1,0 +1,66 @@
+# Tomcat
+server:
+  port: 8080
+
+spring:
+  rabbitmq:
+    # RabbitMQ的主机地址(默认为:localhost)
+    host: 127.0.0.1
+    # 指定该用户要连接到的虚拟host端(注:如果不指定,那么默认虚拟host为“/”)
+#    virtual-host: All
+    # amqp协议端口号:5672; 集群端口号:25672;http端口号:15672;
+    port: 5672
+    # 登录到RabbitMQ的用户名、密码
+    username: guest
+    password: guest
+    #------------------------------------RabbitMQ可选配置(注:这里只用到了特别少的几个)
+    # broker端没有收到消费者的ACK(即:消费者异常时)时,是否再次向消费者投递消息(默认为false)
+#    listener:
+#      simple:
+#        retry:
+#          # 为false时，如果没有收到消费者的ACK，那么会无限投递;设置为true时,默认投递时次数为3此
+#          enabled: true
+#          # 设置向消费者投递消息的最大次数
+#          max-attempts: 2
+#          # 投递消息的间隔(单位ms)
+#          initial-interval: 2000
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: oracle.jdbc.OracleDriver
+    druid:
+      first:  #数据源1
+        url: jdbc:oracle:thin:@10.10.20.141:1521:ORCL
+        #        url: jdbc:oracle:thin:@127.0.0.1:1521:ORCL
+        username: nongbu
+        password: bettem_1q2w3e4r
+      second:  #数据源2
+        url: jdbc:oracle:thin:@10.10.20.141:1521:ORCL
+        #        url: jdbc:oracle:thin:@127.0.0.1:1521:ORCL
+        username: nongbu
+        password: bettem_1q2w3e4r
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      #validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /sys/druid/*
+        #login-username: admin
+        #login-password: admin
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: false
+        wall:
+          config:
+            multi-statement-allow: true
+
