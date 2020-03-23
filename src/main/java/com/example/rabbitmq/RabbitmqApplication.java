@@ -1,5 +1,6 @@
 package com.example.rabbitmq;
 
+import com.example.rabbitmq.annotation.SysLog;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.ui.Model;
@@ -12,6 +13,7 @@ public class RabbitmqApplication {
         SpringApplication.run(RabbitmqApplication.class, args);
     }
 
+    @SysLog("AOP测试")
     @RequestMapping(value = {"","/index"})
     public String index(Model model){
         model.addAttribute("msg","aaaaaaaaaaa!");
